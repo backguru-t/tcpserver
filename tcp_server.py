@@ -2,7 +2,7 @@ import socket
 import threading
 import time
 import os
-from normal_data import data_list
+from custom_data import data_list
 
 send_interval = 0.016   # 데이터 전송 주기
 thread_number = 100       # 장비 개수
