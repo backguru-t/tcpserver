@@ -23,6 +23,9 @@ def chunk_list(data, chunk_size):
     """리스트를 chunk_size 크기로 나눕니다."""
     return [data[i:i + chunk_size] for i in range(0, len(data), chunk_size)]
 
+# 총 엔트리 개수 초기화
+total_entries = 0
+
 # 각 채널에 대한 데이터 읽기 및 파일 저장
 for ch_num in channel_range:
     key = f"GM4000:1:0281:{ch_num}"
@@ -33,6 +36,7 @@ for ch_num in channel_range:
     
     # 엔트리 개수 로그 출력
     entry_count = len(data)
+    total_entries += entry_count
     print(f"Key: {key}, Entry count: {entry_count}")
 
     # 데이터 저장
@@ -44,7 +48,6 @@ for ch_num in channel_range:
             chunked_data = chunk_list(data_list, 16)  # 16개씩 나누기
             formatted_data = [', '.join(map(str, chunk)) for chunk in chunked_data]  # 16개씩 가로로 표시
             json_entry = {
-                'timestamp': entry_data[b'timestamp'].decode('utf-8'),
                 'channel': entry_data[b'channel'].decode('utf-8'),
                 'data': formatted_data  # 바이트 배열을 정수 배열로 변환
             }
@@ -52,3 +55,5 @@ for ch_num in channel_range:
         json.dump(json_data, f, indent=4, separators=(',', ': '))
 
     print(f"Data for channel {ch_num} written to {file_path}")
+    
+print(f"Total number of entries across all channels: {total_entries}")

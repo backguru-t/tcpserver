@@ -5,8 +5,8 @@ import os
 from normal_data import data_list
 
 send_interval = 0.016   # 데이터 전송 주기
-thread_number = 1       # 장비 개수
-max_total_count = 1000 # 모든 스레드가 전송할 총 데이터 개수
+thread_number = 100       # 장비 개수
+max_total_count = 30000 # 모든 스레드가 전송할 총 데이터 개수
 start_port = 10000      # 시작 포트 번호
 
 total_count = 0
